@@ -27,6 +27,8 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
 - ✅ OrganizationModel - Organization structure
 - ✅ BranchModel - Branch information
 - ✅ EnrollmentModel - User-course enrollment tracking
+- ✅ QuizHistoryModel - Records quiz answers, result, question and completion timestamp
+- ✅ ProgressModel - Tracks watched minutes and progress percentage per user/course
 
 #### Data Sources:
 - ✅ AuthRemoteDataSource - Authentication operations
@@ -38,6 +40,8 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
 - ✅ OrganizationRemoteDataSource - Organization CRUD
 - ✅ BranchRemoteDataSource - Branch CRUD
 - ✅ EnrollmentRemoteDataSource - Enrollment operations
+- ✅ QuizHistoryRemoteDataSource - CRUD for quiz history
+- ✅ ProgressRemoteDataSource - Watch/update progress, list and delete
 
 #### Repositories:
 - ✅ AuthRepository
@@ -49,6 +53,8 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
 - ✅ OrganizationRepository
 - ✅ BranchRepository
 - ✅ EnrollmentRepository
+- ✅ QuizHistoryRepository
+- ✅ ProgressRepository
 
 ### 3. **Presentation Layer** ✓
 
@@ -58,6 +64,8 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
 - ✅ CategoryViewModel - Category operations with selected category
 - ✅ CourseViewModel - Course operations
 - ✅ VideoViewModel - Video and checkpoint operations with course filtering
+- ✅ QuizHistoryViewModel - Manage quiz history (admin list + user history)
+- ✅ ProgressViewModel - Manage progress (watch updates, list, delete)
 
 #### Authentication Screens:
 - ✅ Login Screen - Email/password authentication
@@ -106,6 +114,9 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
     - Correct answer
     - Required flag
 
+- ✅ **Quiz History (Admin)** - View and delete quiz history records
+- ✅ **Progress (Admin)** - View and delete user progress records
+
 #### User Screens:
 - ✅ **User Dashboard** - Category browser
   - Grid view of all categories
@@ -124,6 +135,9 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
   - Automatic checkpoint detection
   - Video navigation (forward/backward)
   - Course filtering for videos
+
+- ✅ **My Quiz History** - User can view their quiz attempts and results
+- ✅ **My Progress** - User can view watched minutes and progress percentage per course
 
 #### Checkpoint Features:
 - ✅ **Interactive Quiz Modal**
@@ -147,6 +161,9 @@ A complete Learning Management System (LMS) built with Flutter, featuring separa
 - ✅ Error message displays
 - ✅ Pull-to-refresh capability
 - ✅ Back navigation support
+
+Notes:
+- `QuizHistory` and `Progress` are implemented with remote data sources, repositories and viewmodels. The user dashboard includes quick access actions for "My Quiz History" and "My Progress"; admin dashboard includes tiles for both admin lists.
 
 ### 5. **API Integration** ✓
 All endpoints integrated:
@@ -325,6 +342,30 @@ All endpoints integrated:
 - ✅ **USER_GUIDE.md** - Comprehensive user manual
 - ✅ **IMPLEMENTATION_SUMMARY.md** - This document
 
+### New Deliverables (added)
+- `lib/data/models/quiz_history_model.dart`
+- `lib/data/models/progress_model.dart`
+- `lib/data/data_sources/remote/quiz_history_remote_data_source.dart`
+- `lib/data/data_sources/remote/progress_remote_data_source.dart`
+- `lib/data/repositories/quiz_history_repository.dart`
+- `lib/data/repositories/progress_repository.dart`
+- `lib/presentation/viewmodels/quiz_history_viewmodel.dart`
+- `lib/presentation/viewmodels/progress_viewmodel.dart`
+- `lib/presentation/views/admin/quiz_history_admin_screen.dart`
+- `lib/presentation/views/user/quiz_history_user_screen.dart`
+- `lib/presentation/views/admin/progress_admin_screen.dart`
+- `lib/presentation/views/user/progress_user_screen.dart`
+- `lib/data/models/salary_structure_model.dart`
+- `lib/data/data_sources/remote/salary_structure_remote_data_source.dart`
+- `lib/data/repositories/salary_structure_repository.dart`
+- `lib/presentation/viewmodels/salary_structure_viewmodel.dart`
+- `lib/presentation/views/admin/salary_structures_admin_screen.dart`
+- `lib/data/models/payroll_model.dart`
+- `lib/data/data_sources/remote/payroll_remote_data_source.dart`
+- `lib/data/repositories/payroll_repository.dart`
+- `lib/presentation/viewmodels/payroll_viewmodel.dart`
+- `lib/presentation/views/admin/payrolls_admin_screen.dart`
+
 ### Configuration
 - ✅ pubspec.yaml with all dependencies
 - ✅ analysis_options.yaml
@@ -378,7 +419,11 @@ All endpoints integrated:
 2. Course List (by Category)
 3. Video Player (with Checkpoints)
 
-**Total: 11 Complete Screens**
+Additional screens:
+- Quiz History (Admin + User)
+- Progress (Admin + User)
+
+**Total: 15+ Screens (includes admin and user additions)**
 
 ---
 

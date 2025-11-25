@@ -29,7 +29,10 @@ class VideoViewModel extends ChangeNotifier {
 
     _isLoading = false;
 
-    if (response.success && response.data != null) {
+    // If the API returned 401, treat it as a session expiry so the UI can prompt re-login
+    if (response.statusCode == 401) {
+      _errorMessage = 'Session expired. Please log in again.';
+    } else if (response.success && response.data != null) {
       _videos = response.data!;
     } else {
       _errorMessage = response.message;
@@ -66,7 +69,10 @@ class VideoViewModel extends ChangeNotifier {
 
     _isLoading = false;
 
-    if (response.success && response.data != null) {
+    // Map 401 responses to a unified session-expired message
+    if (response.statusCode == 401) {
+      _errorMessage = 'Session expired. Please log in again.';
+    } else if (response.success && response.data != null) {
       _checkpoints = response.data!;
     } else {
       _errorMessage = response.message;
@@ -125,13 +131,25 @@ class VideoViewModel extends ChangeNotifier {
       videoId: videoId,
       timestamp: timestamp,
       question: question,
-      choices: choices,
+      // Normalize choices: accept semicolons or commas, normalize to comma-separated
+      choices: choices.replaceAll(';', ',').split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).join(', '),
       correctAnswer: correctAnswer,
       required: required,
     );
     final response = await _checkpointRepository.createCheckpoint(checkpoint);
 
+    // Helpful debug prints for failing requests (will appear in console)
+    print('🧾 CreateCheckpoint payload: ${checkpoint.toJson()}');
+    print('🧾 CreateCheckpoint response: success=${response.success}, status=${response.statusCode}, message=${response.message}');
+
     _isLoading = false;
+
+    // If token is invalid/expired, normalize message so UI can handle session expiry
+    if (response.statusCode == 401) {
+      _errorMessage = 'Session expired. Please log in again.';
+      notifyListeners();
+      return false;
+    }
 
     if (response.success) {
       await fetchCheckpoints();
