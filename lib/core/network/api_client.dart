@@ -158,12 +158,29 @@ class ApiClient {
   ) {
     print('📄 Full Response Body: ${response.body}');
     print('📄 Response Body Length: ${response.body.length}');
+    print('📑 Response Headers: ${response.headers}');
     
     // Handle 401 Unauthorized - Token expired or invalid
     if (response.statusCode == 401) {
-      print('🚫 Unauthorized: Token may be expired');
+      print('🚫 Unauthorized: Token may be expired or invalid');
+
+      // Try to surface server detail message if present
+      String detail = 'Session expired. Please login again.';
+      try {
+        final body = jsonDecode(response.body);
+        if (body is Map && body.containsKey('detail')) {
+          detail = body['detail'].toString();
+        }
+      } catch (_) {}
+
+      // Clear stored token proactively so subsequent requests don't reuse invalid token
+      try {
+        SharedPrefs.clearToken();
+        print('🔓 Cleared stored auth token due to 401 response');
+      } catch (_) {}
+
       return ApiResponse.error(
-        'Session expired. Please login again.',
+        detail,
         statusCode: 401,
       );
     }
@@ -190,6 +207,13 @@ class ApiClient {
         final errorBody = jsonDecode(response.body);
         if (errorBody is Map && errorBody.containsKey('detail')) {
           errorMessage = errorBody['detail'].toString();
+        }
+      } catch (_) {}
+      // If body is not JSON (e.g., plain text 'Internal Server Error'), surface it for easier debugging
+      try {
+        final contentType = response.headers['content-type'] ?? '';
+        if (!contentType.contains('application/json') && response.body.isNotEmpty) {
+          errorMessage = response.body;
         }
       } catch (_) {}
       

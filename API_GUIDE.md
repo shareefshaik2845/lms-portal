@@ -403,6 +403,194 @@ Response:
 **DELETE** `/branches/{id}`
 - Requires Auth: ✅
 
+## Quiz History
+
+### Get All Quiz History
+**GET** `/quiz-history/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "user_id": 0,
+    "checkpoint_id": 0,
+    "course_id": 0,
+    "answer": "string",
+    "result": "string",
+    "question": "string",
+    "id": 0,
+    "completed_at": "2025-11-24T06:11:13.139Z"
+  }
+]
+```
+
+### Create Quiz History Record
+**POST** `/quiz-history/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "user_id": 0,
+  "checkpoint_id": 0,
+  "course_id": 0,
+  "answer": "string",
+  "result": "string",
+  "question": "string"
+}
+```
+
+Response:
+```json
+{
+  "message": "string",
+  "id": 0,
+  "user_id": 0,
+  "checkpoint_id": 0,
+  "course_id": 0,
+  "answer": "string",
+  "result": "string",
+  "question": "string",
+  "completed_at": "2025-11-24T06:11:49.393Z"
+}
+```
+
+### Get Quiz History By User
+**GET** `/quiz-history/user/{user_id}`
+- Requires Auth: ✅
+
+Response: same array structure as GET `/quiz-history/` but filtered by user.
+
+### Get / Update / Delete Single Quiz History
+**GET** `/quiz-history/{id}` — Requires Auth: ✅
+
+**PUT** `/quiz-history/{id}` — Requires Auth: ✅
+
+**DELETE** `/quiz-history/{id}` — Requires Auth: ✅
+
+
+## Shifts
+
+### Get All Shifts
+**GET** `/shifts/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "name": "string",
+    "start_time": "06:22:43.712Z",
+    "end_time": "06:22:43.712Z",
+    "description": "string",
+    "shift_code": "string",
+    "shift_name": "string",
+    "working_minutes": 0,
+    "status": "active",
+    "id": 0,
+    "created_at": "2025-11-24T06:22:43.712Z",
+    "updated_at": "2025-11-24T06:22:43.712Z"
+  }
+]
+```
+
+### Create Shift
+**POST** `/shifts/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "name": "string",
+  "start_time": "06:23:03.955Z",
+  "end_time": "06:23:03.955Z",
+  "description": "string",
+  "shift_code": "string",
+  "shift_name": "string",
+  "working_minutes": 0,
+  "status": "active"
+}
+```
+
+Response:
+```json
+{
+  "name": "string",
+  "start_time": "06:23:04",
+  "end_time": "06:23:04",
+  "description": "string",
+  "shift_code": "string",
+  "shift_name": "string",
+  "working_minutes": 0,
+  "status": "active",
+  "id": 1,
+  "created_at": "2025-11-24T06:23:07",
+  "updated_at": null
+}
+```
+
+### Get Shift by ID
+**GET** `/shifts/{id}`
+- Requires Auth: ✅
+
+Response:
+```json
+{
+  "name": "string",
+  "start_time": "06:23:04",
+  "end_time": "06:23:04",
+  "description": "string",
+  "shift_code": "string",
+  "shift_name": "string",
+  "working_minutes": 0,
+  "status": "active",
+  "id": 1,
+  "created_at": "2025-11-24T06:23:07",
+  "updated_at": null
+}
+```
+
+### Update Shift
+**PUT** `/shifts/{id}`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "name": "string",
+  "start_time": "06:23:57.226Z",
+  "end_time": "06:23:57.226Z",
+  "description": "string",
+  "shift_code": "string",
+  "shift_name": "string",
+  "working_minutes": 0,
+  "status": "string"
+}
+```
+
+Response:
+```json
+{
+  "name": "string",
+  "start_time": "06:23:57",
+  "end_time": "06:23:57",
+  "description": "string",
+  "shift_code": "string",
+  "shift_name": "string",
+  "working_minutes": 0,
+  "status": "string",
+  "id": 1,
+  "created_at": "2025-11-24T06:23:07",
+  "updated_at": "2025-11-24T06:24:02"
+}
+```
+
+### Delete Shift
+**DELETE** `/shifts/{id}`
+- Requires Auth: ✅
+
+
 ## Enrollment Management
 
 ### Get All Enrollments
@@ -442,6 +630,460 @@ Response:
 ### Delete Enrollment
 **DELETE** `/enrollments/{id}`
 - Requires Auth: ✅
+
+## Departments
+
+### Get All Departments
+**GET** `/departments/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "name": "string",
+    "code": "string",
+    "description": "string",
+    "status": true,
+    "id": 0,
+    "created_at": "2025-11-24T06:25:11.810Z",
+    "updated_at": "2025-11-24T06:25:11.810Z"
+  }
+]
+```
+
+### Create Department
+**POST** `/departments/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "name": "string",
+  "code": "string",
+  "description": "string",
+  "status": true
+}
+```
+
+Response:
+```json
+{
+  "name": "string",
+  "code": "string",
+  "description": "string",
+  "status": true,
+  "id": 1,
+  "created_at": "2025-11-24T06:25:45",
+  "updated_at": null
+}
+```
+
+### Get Department by ID
+**GET** `/departments/{id}`
+- Requires Auth: ✅
+
+Response:
+```json
+{
+  "name": "string",
+  "code": "string",
+  "description": "string",
+  "status": true,
+  "id": 1,
+  "created_at": "2025-11-24T06:25:45",
+  "updated_at": null
+}
+```
+
+### Update Department
+**PUT** `/departments/{id}`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "name": "string",
+  "code": "string",
+  "description": "string",
+  "status": true
+}
+```
+
+Response:
+```json
+{
+  "name": "string",
+  "code": "string",
+  "description": "string",
+  "status": true,
+  "id": 1,
+  "created_at": "2025-11-24T06:25:45",
+  "updated_at": null
+}
+```
+
+### Delete Department
+**DELETE** `/departments/{id}`
+- Requires Auth: ✅
+
+## Leaves
+
+### Get All Leaves
+**GET** `/leaves/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "name": "string",
+    "description": "string",
+    "status": true,
+    "leave_date": "2025-11-24",
+    "user_id": 0,
+    "year": 0,
+    "allocated": 0,
+    "used": 0,
+    "balance": 0,
+    "carry_forward": false,
+    "holiday": false,
+    "id": 0,
+    "created_at": "2025-11-24T06:28:59.468Z",
+    "updated_at": "2025-11-24T06:28:59.468Z"
+  }
+]
+```
+
+### Create Leave
+**POST** `/leaves/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "name": "string",
+  "description": "string",
+  "status": true,
+  "leave_date": "2025-11-24",
+  "user_id": 0,
+  "year": 0,
+  "allocated": 0,
+  "used": 0,
+  "balance": 0,
+  "carry_forward": false,
+  "holiday": false
+}
+```
+
+Response:
+```json
+{
+  "name": "string",
+  "description": "string",
+  "status": true,
+  "leave_date": "2025-11-24",
+  "user_id": 0,
+  "year": 0,
+  "allocated": 0,
+  "used": 0,
+  "balance": 0,
+  "carry_forward": false,
+  "holiday": false,
+  "id": 0,
+  "created_at": "2025-11-24T06:29:22.187Z",
+  "updated_at": "2025-11-24T06:29:22.187Z"
+}
+```
+
+### Get Leave by ID
+**GET** `/leaves/{id}`
+- Requires Auth: ✅
+
+Response:
+```json
+{
+  "name": "string",
+  "description": "string",
+  "status": true,
+  "leave_date": "2025-11-24",
+  "user_id": 0,
+  "year": 0,
+  "allocated": 0,
+  "used": 0,
+  "balance": 0,
+  "carry_forward": false,
+  "holiday": false,
+  "id": 0,
+  "created_at": "2025-11-24T06:29:48.090Z",
+  "updated_at": "2025-11-24T06:29:48.090Z"
+}
+```
+
+### Update Leave
+**PUT** `/leaves/{id}`
+- Requires Auth: ✅
+
+Request: same format as create
+
+Response: same format as GET by ID
+
+### Delete Leave
+**DELETE** `/leaves/{id}`
+- Requires Auth: ✅
+
+
+## Salary Structures
+
+### Get All Salary Structures
+**GET** `/salary-structures/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "user_id": 0,
+    "basic_salary_annual": 0,
+    "allowances_annual": 0,
+    "deductions_annual": 0,
+    "bonus_annual": 0,
+    "effective_from": "2025-11-24",
+    "effective_to": "2025-11-24",
+    "is_active": true,
+    "id": 0,
+    "total_annual": 0,
+    "created_at": "2025-11-24T06:31:09.832Z",
+    "updated_at": "2025-11-24T06:31:09.832Z"
+  }
+]
+```
+
+### Create Salary Structure
+**POST** `/salary-structures/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "user_id": 0,
+  "basic_salary_annual": 0,
+  "allowances_annual": 0,
+  "deductions_annual": 0,
+  "bonus_annual": 0,
+  "effective_from": "2025-11-24",
+  "effective_to": "2025-11-24",
+  "is_active": true
+}
+```
+
+Response: same object with generated `id`, `total_annual`, timestamps.
+
+### Get Salary Structure by ID
+**GET** `/salary-structures/{id}`
+- Requires Auth: ✅
+
+Response: same as single object above.
+
+### Update Salary Structure
+**PUT** `/salary-structures/{id}`
+- Requires Auth: ✅
+
+Request: (fields to update)
+```json
+{
+  "basic_salary_annual": 0,
+  "allowances_annual": 0,
+  "deductions_annual": 0,
+  "bonus_annual": 0,
+  "effective_from": "2025-11-24",
+  "effective_to": "2025-11-24",
+  "is_active": true
+}
+```
+
+### Delete Salary Structure
+**DELETE** `/salary-structures/{id}`
+- Requires Auth: ✅
+
+
+## Formulas
+
+### Get All Formulas
+**GET** `/formulas/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "component_code": "string",
+    "component_name": "string",
+    "formula_expression": "string",
+    "formula_type": "earning",
+    "is_active": true,
+    "description": "string",
+    "salary_structure_id": 0,
+    "id": 0,
+    "created_at": "2025-11-24T06:33:54.289Z",
+    "updated_at": "2025-11-24T06:33:54.289Z"
+  }
+]
+```
+
+### Create Formula
+**POST** `/formulas/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "component_code": "string",
+  "component_name": "string",
+  "formula_expression": "string",
+  "formula_type": "earning",
+  "is_active": true,
+  "description": "string",
+  "salary_structure_id": 0
+}
+```
+
+Response: created object with `id` and timestamps.
+
+### Get Formula by ID
+**GET** `/formulas/{id}`
+- Requires Auth: ✅
+
+### Update Formula
+**PUT** `/formulas/{id}`
+- Requires Auth: ✅
+
+Request: (fields to update)
+```json
+{
+  "component_name": "string",
+  "formula_expression": "string",
+  "formula_type": "string",
+  "is_active": true,
+  "description": "string",
+  "salary_structure_id": 0
+}
+```
+
+### Delete Formula
+**DELETE** `/formulas/{id}`
+- Requires Auth: ✅
+
+
+## Payrolls
+
+### Get All Payrolls
+**GET** `/payrolls/`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "id": 0,
+    "user_id": 0,
+    "salary_structure_id": 0,
+    "month": "string",
+    "basic_salary": 0,
+    "allowances": 0,
+    "deductions": 0,
+    "bonus": 0,
+    "gross_salary": 0,
+    "net_salary": 0,
+    "status": "string",
+    "created_at": "2025-11-24T06:36:06.105Z",
+    "updated_at": "2025-11-24T06:36:06.105Z",
+    "user_name": "string",
+    "salary_structure_name": "string"
+  }
+]
+```
+
+### Create Payroll
+**POST** `/payrolls/`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "user_id": 0,
+  "salary_structure_id": 0,
+  "month": "2025-10"
+}
+```
+
+Response: created payroll object with calculated fields and timestamps.
+
+### Get Payroll by ID
+**GET** `/payrolls/{id}`
+- Requires Auth: ✅
+
+### Update Payroll
+**PUT** `/payrolls/{id}`
+- Requires Auth: ✅
+
+Request:
+```json
+{
+  "status": "string",
+  "recalculate": false
+}
+```
+
+### Delete Payroll
+**DELETE** `/payrolls/{id}`
+- Requires Auth: ✅
+
+
+
+## Progress
+
+### Update watched minutes (watch action)
+**POST** `/progress/{id}/watch?watched_minutes={minutes}&user_id={user_id}`
+- Description: Increment or update watched minutes for a specific progress record (often invoked from video player). Some backends accept an empty body and take parameters from the query string.
+- Requires Auth: ✅
+
+Response:
+```json
+{
+  "id": 0,
+  "user_id": 0,
+  "course_id": 0,
+  "watched_minutes": 0,
+  "progress_percentage": 0,
+  "created_at": "2025-11-24T06:17:15.331Z",
+  "updated_at": "2025-11-24T06:17:15.331Z"
+}
+```
+
+### Get progress list (filterable)
+**GET** `/progress/?user_id={user_id}&course_id={course_id}`
+- Requires Auth: ✅
+
+Response:
+```json
+[
+  {
+    "id": 0,
+    "user_id": 0,
+    "course_id": 0,
+    "watched_minutes": 0,
+    "progress_percentage": 0,
+    "created_at": "2025-11-24T06:17:50.245Z",
+    "updated_at": "2025-11-24T06:17:50.245Z"
+  }
+]
+```
+
+### Delete progress for a specific user
+**DELETE** `/progress/{id}/user/{user_id}`
+- Requires Auth: ✅
+
 
 ## Role IDs
 

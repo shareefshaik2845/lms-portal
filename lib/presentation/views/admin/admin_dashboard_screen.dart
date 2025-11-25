@@ -4,6 +4,14 @@ import '../../viewmodels/auth_viewmodel.dart';
 import '../auth/login_screen.dart';
 import 'category_management_screen.dart';
 import 'course_management_screen.dart';
+import 'quiz_history_admin_screen.dart';
+import 'progress_admin_screen.dart';
+import 'shifts_admin_screen.dart';
+import 'departments_admin_screen.dart';
+import 'leaves_admin_screen.dart';
+import 'salary_structures_admin_screen.dart';
+import 'formulas_admin_screen.dart';
+import 'payrolls_admin_screen.dart';
 import 'user_management_screen.dart';
 import 'video_management_screen.dart';
 
@@ -172,6 +180,102 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => const VideoManagementScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Quiz History',
+              icon: Icons.history_edu,
+              color: Colors.teal,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const QuizHistoryAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Progress',
+              icon: Icons.show_chart,
+              color: Colors.indigo,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const ProgressAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Shifts',
+              icon: Icons.schedule,
+              color: Colors.brown,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const ShiftsAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Departments',
+              icon: Icons.apartment,
+              color: Colors.cyan,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const DepartmentsAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Leaves',
+              icon: Icons.beach_access,
+              color: Colors.lightGreen,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const LeavesAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Salary Structures',
+              icon: Icons.attach_money,
+              color: Colors.tealAccent,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SalaryStructuresAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Formulas',
+              icon: Icons.functions,
+              color: Colors.deepPurple,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const FormulasAdminScreen(),
+                  ),
+                );
+              },
+            ),
+            _DashboardCard(
+              title: 'Payrolls',
+              icon: Icons.payments,
+              color: Colors.greenAccent,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const PayrollsAdminScreen(),
                   ),
                 );
               },

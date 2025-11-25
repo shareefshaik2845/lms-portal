@@ -4,6 +4,8 @@ import '../../viewmodels/auth_viewmodel.dart';
 import '../../viewmodels/category_viewmodel.dart';
 import '../auth/login_screen.dart';
 import 'course_list_screen.dart';
+import 'quiz_history_user_screen.dart';
+import 'progress_user_screen.dart';
 
 class UserDashboardScreen extends StatefulWidget {
   const UserDashboardScreen({super.key});
@@ -82,6 +84,24 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           },
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            tooltip: 'My Quiz History',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const QuizHistoryUserScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.show_chart),
+            tooltip: 'My Progress',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ProgressUserScreen()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.account_circle),
             tooltip: 'Profile',

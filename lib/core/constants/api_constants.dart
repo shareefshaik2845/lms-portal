@@ -28,4 +28,20 @@ class ApiConstants {
   
   // Enrollment endpoints
   static const String enrollments = '/enrollments/';
+  // Quiz History endpoints
+  static const String quizHistory = '/quiz-history/';
+  // Progress endpoints
+  static const String progress = '/progress/';
+  // Shifts endpoints
+  static const String shifts = '/shifts/';
+  // Departments endpoints
+  static const String departments = '/departments/';
+  // Leaves endpoints
+  static const String leaves = '/leaves/';
+  // Salary Structures endpoints
+  static const String salaryStructures = '/salary-structures/';
+  // Formulas endpoints
+  static const String formulas = '/formulas/';
+  // Payrolls endpoints
+  static const String payrolls = '/payrolls/';
 }

@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'data/data_sources/remote/quiz_history_remote_data_source.dart';
+import 'data/repositories/quiz_history_repository.dart';
+import 'data/data_sources/remote/progress_remote_data_source.dart';
+import 'data/repositories/progress_repository.dart';
+import 'data/data_sources/remote/shift_remote_data_source.dart';
+import 'data/repositories/shift_repository.dart';
+import 'data/data_sources/remote/department_remote_data_source.dart';
+import 'data/repositories/department_repository.dart';
+import 'data/data_sources/remote/leave_remote_data_source.dart';
+import 'data/repositories/leave_repository.dart';
+import 'data/data_sources/remote/salary_structure_remote_data_source.dart';
+import 'data/repositories/salary_structure_repository.dart';
+import 'data/data_sources/remote/formula_remote_data_source.dart';
+import 'data/repositories/formula_repository.dart';
+import 'presentation/viewmodels/formula_viewmodel.dart';
+import 'data/data_sources/remote/payroll_remote_data_source.dart';
+import 'data/repositories/payroll_repository.dart';
+import 'presentation/viewmodels/payroll_viewmodel.dart';
 import 'presentation/viewmodels/auth_viewmodel.dart';
 import 'presentation/viewmodels/category_viewmodel.dart';
 import 'presentation/viewmodels/course_viewmodel.dart';
+import 'presentation/viewmodels/quiz_history_viewmodel.dart';
+import 'presentation/viewmodels/progress_viewmodel.dart';
+import 'presentation/viewmodels/shift_viewmodel.dart';
+import 'presentation/viewmodels/department_viewmodel.dart';
+import 'presentation/viewmodels/leave_viewmodel.dart';
+import 'presentation/viewmodels/salary_structure_viewmodel.dart';
 import 'presentation/viewmodels/user_viewmodel.dart';
 import 'presentation/viewmodels/video_viewmodel.dart';
 import 'presentation/views/auth/login_screen.dart';
@@ -70,6 +94,62 @@ class MyApp extends StatelessWidget {
           create: (_) => VideoViewModel(
             VideoRepository(VideoRemoteDataSource(apiClient)),
             CheckpointRepository(CheckpointRemoteDataSource(apiClient)),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => QuizHistoryViewModel(
+            QuizHistoryRepository(
+              QuizHistoryRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProgressViewModel(
+            ProgressRepository(
+              ProgressRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ShiftViewModel(
+            ShiftRepository(
+              ShiftRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DepartmentViewModel(
+            DepartmentRepository(
+              DepartmentRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeaveViewModel(
+            LeaveRepository(
+              LeaveRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SalaryStructureViewModel(
+            SalaryStructureRepository(
+              SalaryStructureRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FormulaViewModel(
+            FormulaRepository(
+              FormulaRemoteDataSource(apiClient),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PayrollViewModel(
+            PayrollRepository(
+              PayrollRemoteDataSource(apiClient),
+            ),
           ),
         ),
       ],

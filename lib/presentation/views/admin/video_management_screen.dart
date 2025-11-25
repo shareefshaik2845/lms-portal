@@ -198,6 +198,7 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
   }
 
   void _showAddCheckpointDialog(int videoId, String videoTitle) {
+    final videoIdController = TextEditingController(text: videoId.toString());
     final questionController = TextEditingController();
     final choicesController = TextEditingController();
     final correctAnswerController = TextEditingController();
@@ -213,6 +214,16 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                TextField(
+                  controller: videoIdController,
+                  decoration: const InputDecoration(
+                    labelText: 'Video ID',
+                    hintText: 'ID of the video',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 12),
                 TextField(
                   controller: timestampController,
                   decoration: const InputDecoration(
@@ -271,7 +282,8 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (questionController.text.isEmpty ||
+                if (videoIdController.text.isEmpty ||
+                    questionController.text.isEmpty ||
                     choicesController.text.isEmpty ||
                     correctAnswerController.text.isEmpty ||
                     timestampController.text.isEmpty) {
@@ -284,8 +296,10 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
                   return;
                 }
 
+                final parsedVideoId = int.tryParse(videoIdController.text) ?? videoId;
+
                 final success = await context.read<VideoViewModel>().createCheckpoint(
-                      videoId: videoId,
+                      videoId: parsedVideoId,
                       timestamp: int.tryParse(timestampController.text) ?? 0,
                       question: questionController.text,
                       choices: choicesController.text,
