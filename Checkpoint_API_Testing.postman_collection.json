@@ -1,0 +1,267 @@
+{
+  "info": {
+    "_postman_id": "checkpoint-api-testing",
+    "name": "Checkpoint API Testing",
+    "description": "Complete checkpoint creation testing workflow for debugging 500 errors",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Get All Videos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/videos/",
+          "host": ["{{baseUrl}}"],
+          "path": ["videos", ""]
+        },
+        "description": "Step 1: Get list of all videos to check available IDs\n\nExpected Response: 200 OK with array of video objects\nWhat to look for: Is video_id 2 in the list?"
+      }
+    },
+    {
+      "name": "2. Get Video by ID (ID 2)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/videos/2",
+          "host": ["{{baseUrl}}"],
+          "path": ["videos", "2"]
+        },
+        "description": "Check if video with ID 2 exists\n\nExpected Response: 200 OK if exists, 404 if not found\nIf 404: Video ID 2 doesn't exist, use ID 1 instead"
+      }
+    },
+    {
+      "name": "3. Get Video by ID (ID 1)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/videos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["videos", "1"]
+        },
+        "description": "Check if video with ID 1 exists\n\nExpected Response: 200 OK\nThis is our fallback video ID for testing"
+      }
+    },
+    {
+      "name": "4. Create Checkpoint - MINIMAL TEST (video_id 1)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 1,\n  \"timestamp\": 0,\n  \"question\": \"Q\",\n  \"choices\": \"A;B;C\",\n  \"correct_answer\": \"A\",\n  \"required\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "MINIMAL checkpoint test - simplest possible data\n\nExpected Response: 201 Created or 200 OK\nIf 201 Created: Field names are correct, video_id 1 exists\nIf 500 Error: Problem is with field names or types (go to Test 5)\nIf 404 Error: Video_id 1 doesn't exist either"
+      }
+    },
+    {
+      "name": "5. Create Checkpoint - MINIMAL with is_required",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 1,\n  \"timestamp\": 0,\n  \"question\": \"Q\",\n  \"choices\": \"A;B;C\",\n  \"correct_answer\": \"A\",\n  \"is_required\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Test if 'required' field name is causing issues\n\nIf this works and Test 4 didn't: Problem is the 'required' field name\nSolution: Update CheckpointModel.toJson() to use 'is_required'\n\nExpected Response: 201 Created"
+      }
+    },
+    {
+      "name": "6. Create Checkpoint - MINIMAL without required field",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 1,\n  \"timestamp\": 0,\n  \"question\": \"Q\",\n  \"choices\": \"A;B;C\",\n  \"correct_answer\": \"A\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Test if omitting 'required' field works\n\nIf this works: Backend doesn't expect 'required' field\nSolution: Make 'required' optional in the POST request\n\nExpected Response: 201 Created"
+      }
+    },
+    {
+      "name": "7. Create Checkpoint - SAFE TEST (video_id 1)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 1,\n  \"timestamp\": 30,\n  \"question\": \"Which option is correct?\",\n  \"choices\": \"Option A;Option B;Option C;Option D\",\n  \"correct_answer\": \"Option A\",\n  \"required\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Safe checkpoint test with typical values\n\nExpected Response: 201 Created\nThis is more realistic than the minimal test"
+      }
+    },
+    {
+      "name": "8. Create Checkpoint - YOUR TEST DATA (video_id 1)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 1,\n  \"timestamp\": 150,\n  \"question\": \"Dart is developed by which company?\",\n  \"choices\": \"Facebook;Microsoft;Google;Oracle\",\n  \"correct_answer\": \"Google\",\n  \"required\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Your original test data but with video_id 1 instead of 2\n\nExpected Response: 201 Created if video_id 1 exists\n\nIf this works: The problem was video_id 2 not existing"
+      }
+    },
+    {
+      "name": "9. Get All Checkpoints",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Get list of all created checkpoints\n\nUse this to verify your checkpoint was created successfully\nExpected Response: 200 OK with array of checkpoint objects"
+      }
+    },
+    {
+      "name": "10. ORIGINAL - Create Checkpoint (video_id 2 - Currently Failing)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"video_id\": 2,\n  \"timestamp\": 150,\n  \"question\": \"Dart is developed by which company?\",\n  \"choices\": \"Facebook;Instagram;Google;Oracle\",\n  \"correct_answer\": \"Google\",\n  \"required\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/checkpoints/",
+          "host": ["{{baseUrl}}"],
+          "path": ["checkpoints", ""]
+        },
+        "description": "Your original request that's getting 500 error\n\nExpected Response: Currently 500 Internal Server Error\nMost likely cause: video_id 2 doesn't exist\n\nFix: Run Tests 1 and 2 to verify video exists, then try with video_id 1"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://16.170.31.99:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "YOUR_BEARER_TOKEN_HERE",
+      "type": "string",
+      "description": "Replace with your actual Bearer token from login response"
+    }
+  ]
+}
