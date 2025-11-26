@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/repositories/quiz_history_repository.dart';
 import '../../data/models/quiz_history_model.dart';
-import '../../core/network/api_response.dart';
 import '../../core/utils/shared_prefs.dart';
 
 class QuizHistoryViewModel extends ChangeNotifier {

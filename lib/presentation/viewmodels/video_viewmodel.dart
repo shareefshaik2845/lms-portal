@@ -127,15 +127,65 @@ class VideoViewModel extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
+    // Validate inputs before sending to API
+    // Video ID validation (must exist)
+    if (!_videos.any((v) => v.id == videoId)) {
+      _errorMessage = 'Selected video not found';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // Timestamp validation
+    if (timestamp < 0) {
+      _errorMessage = 'Timestamp must be 0 or greater';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // Question validation
+    if (question.trim().isEmpty) {
+      _errorMessage = 'Question cannot be empty';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // Choices validation
+    final choicesList = choices
+        .split(RegExp('[,;]')) // Split by comma or semicolon
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+
+    if (choicesList.isEmpty) {
+      _errorMessage = 'Choices cannot be empty';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // Correct answer validation - must exactly match one of the choices
+    final trimmedCorrectAnswer = correctAnswer.trim();
+    if (!choicesList.contains(trimmedCorrectAnswer)) {
+      _errorMessage = 'Correct answer must match one of the choices exactly.\nAvailable: ${choicesList.join(", ")}';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // Create checkpoint with normalized choices (semicolon-separated per API format)
     final checkpoint = CheckpointModel(
       videoId: videoId,
       timestamp: timestamp,
-      question: question,
-      // Normalize choices: accept semicolons or commas, normalize to comma-separated
-      choices: choices.replaceAll(';', ',').split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).join(', '),
-      correctAnswer: correctAnswer,
+      question: question.trim(),
+      // Store choices exactly as the API expects them (normalized)
+      choices: choicesList.join(';'),
+      correctAnswer: trimmedCorrectAnswer,
       required: required,
     );
+
     final response = await _checkpointRepository.createCheckpoint(checkpoint);
 
     // Helpful debug prints for failing requests (will appear in console)

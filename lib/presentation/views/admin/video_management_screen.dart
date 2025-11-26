@@ -198,7 +198,6 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
   }
 
   void _showAddCheckpointDialog(int videoId, String videoTitle) {
-    final videoIdController = TextEditingController(text: videoId.toString());
     final questionController = TextEditingController();
     final choicesController = TextEditingController();
     final correctAnswerController = TextEditingController();
@@ -208,133 +207,229 @@ class _VideoManagementScreenState extends State<VideoManagementScreen> {
     showDialog(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text('Add Checkpoint for "$videoTitle"'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: videoIdController,
-                  decoration: const InputDecoration(
-                    labelText: 'Video ID',
-                    hintText: 'ID of the video',
-                    border: OutlineInputBorder(),
+        builder: (context, setState) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.shade50,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(Icons.quiz, color: Colors.orange.shade700),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Add Checkpoint for "$videoTitle"',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: timestampController,
-                  decoration: const InputDecoration(
-                    labelText: 'Timestamp (seconds)',
-                    hintText: 'e.g., 300 for 5 minutes',
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Video ID: $videoId',
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: questionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Question',
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 24),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: TextField(
+                      controller: timestampController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Timestamp (seconds)',
+                        hintText: 'e.g., 150 for 2 minutes 30 seconds',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        prefixIcon: Icon(Icons.access_time),
+                      ),
+                    ),
                   ),
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: choicesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Choices (comma separated)',
-                    hintText: 'Option A, Option B, Option C, Option D',
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: TextField(
+                      controller: questionController,
+                      decoration: const InputDecoration(
+                        labelText: 'Question',
+                        hintText: 'e.g., Dart is developed by which company?',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        prefixIcon: Icon(Icons.question_answer),
+                      ),
+                      maxLines: 2,
+                    ),
                   ),
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: correctAnswerController,
-                  decoration: const InputDecoration(
-                    labelText: 'Correct Answer',
-                    hintText: 'Must match one of the choices',
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: TextField(
+                      controller: choicesController,
+                      decoration: const InputDecoration(
+                        labelText: 'Choices (semicolon or comma separated)',
+                        hintText: 'e.g., Facebook; Microsoft; Google; Oracle',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        prefixIcon: Icon(Icons.list),
+                      ),
+                      maxLines: 3,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                CheckboxListTile(
-                  title: const Text('Required'),
-                  subtitle: const Text('User must answer to continue'),
-                  value: isRequired,
-                  onChanged: (value) {
-                    setState(() {
-                      isRequired = value ?? true;
-                    });
-                  },
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: TextField(
+                      controller: correctAnswerController,
+                      decoration: const InputDecoration(
+                        labelText: 'Correct Answer',
+                        hintText: 'Must exactly match one of the choices',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        prefixIcon: Icon(Icons.check_circle),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: CheckboxListTile(
+                      title: const Text('Required'),
+                      subtitle: const Text('User must answer to continue'),
+                      value: isRequired,
+                      onChanged: (value) {
+                        setState(() {
+                          isRequired = value ?? true;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(dialogContext).pop(),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey.shade600,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        ),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (questionController.text.isEmpty ||
+                              choicesController.text.isEmpty ||
+                              correctAnswerController.text.isEmpty ||
+                              timestampController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please fill all fields'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            return;
+                          }
+
+                          final success = await context.read<VideoViewModel>().createCheckpoint(
+                            videoId: videoId,
+                            timestamp: int.tryParse(timestampController.text) ?? 0,
+                            question: questionController.text,
+                            choices: choicesController.text,
+                            correctAnswer: correctAnswerController.text,
+                            required: isRequired,
+                          );
+
+                          if (dialogContext.mounted) {
+                            if (success) {
+                              Navigator.of(dialogContext).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Checkpoint added successfully'),
+                                  backgroundColor: Colors.green.shade600,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              final viewModel = context.read<VideoViewModel>();
+                              if (viewModel.errorMessage == 'Session expired. Please log in again.') {
+                                Navigator.of(dialogContext).pop();
+                                _handleSessionExpired();
+                              } else {
+                                // Show error but keep dialog open so user can fix
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(viewModel.errorMessage ?? 'Failed to add checkpoint'),
+                                    backgroundColor: Colors.red.shade600,
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange.shade600,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('Add Checkpoint'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (videoIdController.text.isEmpty ||
-                    questionController.text.isEmpty ||
-                    choicesController.text.isEmpty ||
-                    correctAnswerController.text.isEmpty ||
-                    timestampController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please fill all fields'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                  return;
-                }
-
-                final parsedVideoId = int.tryParse(videoIdController.text) ?? videoId;
-
-                final success = await context.read<VideoViewModel>().createCheckpoint(
-                      videoId: parsedVideoId,
-                      timestamp: int.tryParse(timestampController.text) ?? 0,
-                      question: questionController.text,
-                      choices: choicesController.text,
-                      correctAnswer: correctAnswerController.text,
-                      required: isRequired,
-                    );
-
-                if (dialogContext.mounted) {
-                  Navigator.of(dialogContext).pop();
-                  
-                  if (success) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Checkpoint added successfully'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  } else {
-                    final viewModel = context.read<VideoViewModel>();
-                    if (viewModel.errorMessage == 'Session expired. Please log in again.') {
-                      _handleSessionExpired();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(viewModel.errorMessage ?? 'Failed to add checkpoint'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  }
-                }
-              },
-              child: const Text('Add'),
-            ),
-          ],
         ),
       ),
     );
